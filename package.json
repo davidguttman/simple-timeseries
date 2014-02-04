@@ -1,0 +1,26 @@
+{
+  "name": "simple-timeseries",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "example": "beefy --live --open example/index.js"
+  },
+  "author": "David Guttman",
+  "license": "MIT",
+  "dependencies": {
+    "d3": "~3.4.1",
+    "cssify": "~0.4.1"
+  },
+  "browser": "index.js",
+  "browserify": {
+    "transform": [
+      "cssify"
+    ]
+  },
+  "devDependencies": {
+    "browserify": "~3.20.0",
+    "beefy": "~0.7.1",
+    "tape": "~2.4.2"
+  }
+}

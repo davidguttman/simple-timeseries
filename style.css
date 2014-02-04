@@ -1,0 +1,21 @@
+
+.st-container {
+  font: 10px sans-serif;
+}
+
+.st-container .axis path,
+.st-container .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.st-container .x.axis path {
+  display: none;
+}
+
+.st-container .line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
