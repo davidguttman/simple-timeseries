@@ -5,6 +5,12 @@ A simple timeseries chart using D3.
 
 ![Screen Shot](http://i.imgur.com/6WtHvYh.png)
 
+Installation:
+
+```
+npm i simple-timeseries
+```
+
 Usage:
 
 ```js
