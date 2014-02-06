@@ -1,4 +1,4 @@
-var LineChart = require('../')
+var SimpleTimeseries = require('../')
 
 var data = require('./single.json')
 var opts = {
@@ -7,5 +7,5 @@ var opts = {
   yLabel: 'Price'
 }
 
-var lineChart = new LineChart(data, opts)
-document.body.appendChild(lineChart.el)
+var simpleTimeseries = new SimpleTimeseries(data, opts)
+document.body.appendChild(simpleTimeseries.el)
