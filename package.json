@@ -1,6 +1,6 @@
 {
   "name": "simple-timeseries",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A simple timeseries chart using D3",
   "main": "index.js",
   "scripts": {
