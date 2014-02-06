@@ -53,31 +53,10 @@ LineChart.prototype.init = function() {
     })
   });
 
-  x.domain([
-    d3.min(this.data, function(series) { 
-      return d3.min(series.data, function(d) { 
-        return d[0] 
-      }) 
-    }),  
-    d3.max(this.data, function(series) { 
-      return d3.max(series.data, function(d) { 
-        return d[0] 
-      }) 
-    })
-  ]);
+  var minMax = getMinMax(this.data)
 
-  y.domain([
-    d3.min(this.data, function(series) { 
-      return d3.min(series.data, function(d) { 
-        return d[1] 
-      }) 
-    }),  
-    d3.max(this.data, function(series) { 
-      return d3.max(series.data, function(d) { 
-        return d[1] 
-      }) 
-    })
-  ]);
+  x.domain(minMax.x);
+  y.domain(minMax.y);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -99,8 +78,26 @@ LineChart.prototype.init = function() {
         .datum(series.data)
         .attr("class", "line")
         .attr("d", line);
-
   })
-  
-  
+}
+
+function getMinMax (data) {
+  return { 
+    x: [
+      d3.min(data, function(series) { 
+        return d3.min(series.data, function(d) { return d[0] }) 
+      }),  
+      d3.max(data, function(series) { 
+        return d3.max(series.data, function(d) { return d[0] }) 
+      })
+    ],
+    y: [
+      d3.min(data, function(series) { 
+        return d3.min(series.data, function(d) { return d[1] }) 
+      }),  
+      d3.max(data, function(series) { 
+        return d3.max(series.data, function(d) { return d[1] }) 
+      })
+    ]
+  }
 }
