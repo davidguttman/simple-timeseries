@@ -18,7 +18,7 @@ var LineChart = module.exports = function (data, opts) {
 }
 
 LineChart.prototype.init = function() {
-  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+  var margin = {top: 20, right: 80, bottom: 30, left: 50},
       width = this.opts.width - margin.left - margin.right,
       height = this.opts.height - margin.top - margin.bottom;
 
@@ -27,6 +27,8 @@ LineChart.prototype.init = function() {
 
   var y = d3.scale.linear()
       .range([height, 0]);
+
+  var color = d3.scale.category10();
 
   var xAxis = d3.svg.axis()
       .scale(x)
@@ -46,7 +48,8 @@ LineChart.prototype.init = function() {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  
+  color.domain(this.data.map(function(series) {return series.label}));
+
   this.data.forEach(function(series) {
     series.data.forEach(function(d) {
       d[0] = new Date(d[0]);  
@@ -77,7 +80,18 @@ LineChart.prototype.init = function() {
     svg.append("path")
         .datum(series.data)
         .attr("class", "line")
-        .attr("d", line);
+        .attr("d", line)
+        .style("stroke", color(series.label));
+
+    svg.append("text")
+        .datum({label: series.label, value: series.data[series.data.length-1]})
+        .attr("transform", function(d) { 
+          return "translate(" + x(d.value[0]) + "," + y(d.value[1]) + ")"; 
+        })
+        .attr("x", 3)
+        .attr("dy", ".35em")
+        .text(function(d) { return d.label; });
+
   })
 }
 
