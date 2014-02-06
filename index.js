@@ -5,8 +5,14 @@ var d3 = require('d3')
 var LineChart = module.exports = function (data, opts) {
   this.el = document.createElement('div')
   this.el.classList.add('st-container')
-  this.data = data || []
+  this.data = data
   this.opts = opts || {}
+
+  if (this.data[0].length) {
+    this.data = [
+      {data: this.data}
+    ]
+  }
 
   this.init()
 }
@@ -41,12 +47,37 @@ LineChart.prototype.init = function() {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   
-  this.data.forEach(function(d) {
-    d[0] = new Date(d[0]);
+  this.data.forEach(function(series) {
+    series.data.forEach(function(d) {
+      d[0] = new Date(d[0]);  
+    })
   });
 
-  x.domain(d3.extent(this.data, function(d) { return d[0]; }));
-  y.domain(d3.extent(this.data, function(d) { return d[1]; }));
+  x.domain([
+    d3.min(this.data, function(series) { 
+      return d3.min(series.data, function(d) { 
+        return d[0] 
+      }) 
+    }),  
+    d3.max(this.data, function(series) { 
+      return d3.max(series.data, function(d) { 
+        return d[0] 
+      }) 
+    })
+  ]);
+
+  y.domain([
+    d3.min(this.data, function(series) { 
+      return d3.min(series.data, function(d) { 
+        return d[1] 
+      }) 
+    }),  
+    d3.max(this.data, function(series) { 
+      return d3.max(series.data, function(d) { 
+        return d[1] 
+      }) 
+    })
+  ]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -63,9 +94,13 @@ LineChart.prototype.init = function() {
       .style("text-anchor", "end")
       .text(this.opts.yLabel);
 
-  svg.append("path")
-      .datum(this.data)
-      .attr("class", "line")
-      .attr("d", line);
+  this.data.forEach(function(series) {
+    svg.append("path")
+        .datum(series.data)
+        .attr("class", "line")
+        .attr("d", line);
+
+  })
+  
   
 }
