@@ -39,6 +39,14 @@ document.body.appendChild(st.el)
 
 ```
 
+Examples:
+
+See examples in `/example`, view in browser by running:
+
+```
+npm run example
+```
+
 Uses code from http://bl.ocks.org/mbostock/3883245
 
 License
